@@ -1,4 +1,4 @@
-module github.com/sausheong/goopenai
+module github.com/sausheong/openai
 
 go 1.18
 

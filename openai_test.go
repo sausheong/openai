@@ -26,9 +26,9 @@ func TestCompletion(t *testing.T) {
 
 	client := NewClient(apiKey, organization)
 	request := make(CompletionRequest)
-
-	request["model"] = TEXT_DAVINCI_002
-	request["prompt"] = fmt.Sprintf("%s:%s", header, text)
+	request.SetUser("test-user")
+	request.SetModel(TEXT_DAVINCI_002)
+	request.SetPrompt(fmt.Sprintf("%s:%s", header, text))
 	request["temperature"] = 0.75
 	request["max_tokens"] = 50
 
