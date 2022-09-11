@@ -1,5 +1,7 @@
 # OpenAI
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/sausheong/openai.svg)](https://pkg.go.dev/github.com/sausheong/openai)
+
 OpenAI is a package that wraps around the OpenAI HTTP APIs. To use this package properly you will need to have an OpenAI account (currently in beta), which will give you the API key that you need. You will also be assigned to an organization, which you can optionally add to the API request.
 
 Important to note that each application developed using the OpenAI APIs need to be approved by OpenAI. 
