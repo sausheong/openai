@@ -35,6 +35,10 @@ func (cr ImageResponse) URL() string {
 	return cr["data"].([]any)[0].(map[string]any)["url"].(string)
 }
 
+func (cr ImageResponse) ImageBase64() string {
+	return cr["data"].([]any)[0].(map[string]any)["b64_json"].(string)
+}
+
 func (cr ImageResponse) Created() time.Time {
 	return time.Unix(int64(cr["created"].(float64)), 0)
 }
