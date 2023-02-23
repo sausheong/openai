@@ -43,3 +43,18 @@ func TestCompletion(t *testing.T) {
 	fmt.Println(cr.Created())
 
 }
+
+func TestGenerateImage(t *testing.T) {
+
+	client := NewClient(apiKey, organization)
+	request := make(ImageRequest)
+	request.SetUser("test-user")
+	request.SetPrompt(text)
+
+	cr, err := client.GenerateImage(request)
+	if err != nil {
+		t.Error(err)
+	}
+	fmt.Println(cr.URL())
+	fmt.Println(cr.Created())
+}

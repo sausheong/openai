@@ -2,6 +2,7 @@ package openai
 
 const (
 	COMPLETIONS_URL = "https://api.openai.com/v1/completions"
+	IMAGE_URL       = "https://api.openai.com/v1/images"
 	EDITS_URL       = "https://api.openai.com/v1/edits"
 	MODELS_URL      = "https://api.openai.com/v1/models"
 	EMBEDDINGS_URL  = "https://api.openai.com/v1/embeddings"
