@@ -3,7 +3,7 @@ package openai
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -25,7 +25,7 @@ func (c *Client) GenerateImage(request ImageRequest) (response ImageResponse, er
 	req.Header.Add("Authorization", "Bearer "+c.Authorization)
 	req.Header.Add("OpenAI-Organization", c.Organization)
 	req.Header.Add("Content-Type", "application/json")
-	req.Body = ioutil.NopCloser(bytes.NewReader(body))
+	req.Body = io.NopCloser(bytes.NewReader(body))
 
 	// create a HTTP client and use it to send the request
 	httpClient := http.Client{}
@@ -35,7 +35,7 @@ func (c *Client) GenerateImage(request ImageRequest) (response ImageResponse, er
 	}
 	defer resp.Body.Close()
 	// read body from HTTP response and store into the client
-	body, err = ioutil.ReadAll(resp.Body)
+	body, err = io.ReadAll(resp.Body)
 	response = make(ImageResponse)
 	err = json.Unmarshal(body, &response)
 	return
@@ -52,7 +52,7 @@ func (c *Client) Complete(request CompletionRequest) (response CompletionRespons
 	req.Header.Add("Authorization", "Bearer "+c.Authorization)
 	req.Header.Add("OpenAI-Organization", c.Organization)
 	req.Header.Add("Content-Type", "application/json")
-	req.Body = ioutil.NopCloser(bytes.NewReader(body))
+	req.Body = io.NopCloser(bytes.NewReader(body))
 
 	// create a HTTP client and use it to send the request
 	httpClient := http.Client{}
@@ -62,7 +62,7 @@ func (c *Client) Complete(request CompletionRequest) (response CompletionRespons
 	}
 	defer resp.Body.Close()
 	// read body from HTTP response and store into the client
-	body, err = ioutil.ReadAll(resp.Body)
+	body, err = io.ReadAll(resp.Body)
 	response = make(CompletionResponse)
 	err = json.Unmarshal(body, &response)
 	return
