@@ -20,23 +20,24 @@ func init() {
 	organization = os.Getenv("OPENAI_ORGANIZATION")
 }
 
-var header = "Suggest an inspirational quote based on "
 var text = "enchanted forest, with a path between the trees, sun shining, close up, Cinematic Lighting, 3d, render, hyper detailed, 8k"
+var text2 = "Summarize this : Microsoft Azure is a cloud computing platform developed by Microsoft. It provides a range of cloud services, including computing, storage, analytics, virtualization, networking and the web. Azure allows organizations to build, deploy and manage applications and services from any cloud environment. It also provides tools and services to help organizations develop, deploy and manage applications, platforms and systems. Some of the features of Azure include virtual machines, compute and storage services, networking, automation and identity management. Azure also provides tools to help developers create and deploy applications and services, as well as tools to create, manage and deploy applications and services in the cloud. In addition, Azure provides an integrated development environment (IDE) to help developers create and debug applications."
 
 func TestCompletion(t *testing.T) {
 
 	client := NewClient(apiKey, organization)
 	request := make(CompletionRequest)
-	request.SetUser("test-user")
-	request.SetModel(TEXT_DAVINCI_002)
-	request.SetPrompt(fmt.Sprintf("%s:%s", header, text))
+	request.SetModel(TEXT_DAVINCI_003)
+	request.SetPrompt(text2 + " {}")
 	request["temperature"] = 0.75
-	request["max_tokens"] = 50
+	request["max_tokens"] = 4096 - len(text2)
+	request["stop"] = "{}"
 
 	cr, err := client.Complete(request)
 	if err != nil {
 		t.Error(err)
 	}
+	fmt.Println(cr)
 	fmt.Println(cr.Text())
 	fmt.Println(cr.Id())
 	fmt.Println(cr.Model())
@@ -64,7 +65,6 @@ func TestGenerateImageB64(t *testing.T) {
 
 	client := NewClient(apiKey, organization)
 	request := make(ImageRequest)
-	request.SetUser("test-user")
 	request.SetPrompt(text)
 	request.SetFormat("b64_json")
 

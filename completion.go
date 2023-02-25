@@ -1,9 +1,6 @@
 package openai
 
-import (
-	"fmt"
-	"time"
-)
+import "time"
 
 // CompletionRequest is the request to send to the OpenAI API for completion
 // The 2 required fields are prompt and model
@@ -12,6 +9,7 @@ type CompletionRequest map[string]any
 
 // User is unique identifier representing your end-user, which will help OpenAI to monitor and detect abuse.
 // You should set the user to the actual end-user that is sending the request
+// OpenAI has since changed their policy to not require a user
 func (c CompletionRequest) SetUser(user string) {
 	c["user"] = user
 }
@@ -27,14 +25,7 @@ func (c CompletionRequest) SetPrompt(prompt string) {
 type CompletionResponse map[string]any
 
 func (cr CompletionResponse) Text() string {
-	choices := cr["choices"].([]any)[0].(map[string]any)
-	text := choices["text"]
-	if text == nil {
-		fmt.Println("text is nil>>", choices)
-		return ""
-	} else {
-		return text.(string)
-	}
+	return cr["choices"].([]any)[0].(map[string]any)["text"].(string)
 }
 
 func (cr CompletionResponse) Id() string {
